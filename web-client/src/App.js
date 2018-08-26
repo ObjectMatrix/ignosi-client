@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import Logo from './logo';
-import Skills from './skills';
-
+import SkillList from './containers/skilllist';
 
 class App extends Component {
   render() {
     return (
-      <React.Fragment>
-
-        <div>
-          <Logo />
-          <Skills />
-        </div>
+    <React.Fragment>
+      <div className="col-md-10">
+        <Logo />
+        <SkillList />
+      </div>
       </React.Fragment>
     );
   }
