@@ -4,6 +4,7 @@ import Skill from '../components/skill';
 import { fetchAllSkills } from '../actions/';
 import Level from '../components/level-select';
 import Subject from '../components/subject-select';
+import '../css/common.css';
 
 class SkillList extends React.Component {
   constructor(props) {
@@ -15,8 +16,8 @@ class SkillList extends React.Component {
     return (
       <div>
         <div>
-        <div style={divStyle}>{ !!this.props.skills.length && <Level /> }</div>
-        <div style={divStyle}>{ !!this.props.skills.length && <Subject /> }</div>
+        <div className="divStyleLevel">{ !!this.props.skills.length && <Level /> }</div>
+        <div className="divStyleSubject">{ !!this.props.skills.length && <Subject /> }</div>
         </div>
         {
           !!this.props.skills.length && this.props.skills.map((skill) => {
@@ -41,13 +42,6 @@ class SkillList extends React.Component {
         }
       }
     };
-
-  const divStyle = {
-      width: '40%',
-      display: 'inline-block',
-      'margin-right': '10px',
-  };
-
 
 export default connect(
   mapStateToProps,
