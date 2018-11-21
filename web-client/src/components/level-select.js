@@ -1,33 +1,52 @@
 import React from 'react';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { fetchLevelSubjectSkills } from '../actions/';
+import '../css/common.css';
+// import { fetchLevelSubjectSkills } from '../actions/';
 
 class Level extends React.Component {
   state = {
     selectedLevelOption: null,
+    selectedSubjectOption: null,
   }
-  handleChange = (selectedLevelOption) => {
-    this.setState({ selectedLevelOption });
-    this.props.levelSubjectSkills(selectedLevelOption);
-    // console.log(`Option selected:`, selectedLevelOption);
-  }
-  sendAlert = () => {
-    this.props.sendTheAlert()
-}
 
+  handleChangeLevel = (selectedLevelOption) => {
+    this.setState({ selectedLevelOption });
+  }
+
+  handleChangeSubject = (selectedSubjectOption) => {
+    this.setState({ selectedSubjectOption });
+  }
+
+  componentDidUpdate() {
+    this.props.onSelect(this.state)
+  }
   render() {
+    const optionsLevel = this.props.level
+    const optionsSubject = this.props.subject
     const { selectedLevelOption } = this.state;
-    const keys = this.props.skills.map((level) => ({ value: level.qeGrade, label: level.qeGrade }));
-    const uniKeys = [...(new Set(keys.map(({ value }) => value)))];
-    const options = uniKeys.map((level) => ({ value: level, label: level }));
+    const { selectedSubjectOption } = this.state;
 
     return (
-      <Select
-        value={selectedLevelOption}
-        onChange={this.handleChange}
-        options={options}
-      />
+    <div>
+
+      <div className="divStyleLevel">
+          <Select
+            value={selectedLevelOption}
+            onChange={this.handleChangeLevel}
+            options={optionsLevel}
+          />
+      </div>
+
+      <div className="divStyleSubject">
+          <Select
+            value={selectedSubjectOption}
+            onChange={this.handleChangeSubject}
+            options={optionsSubject}
+          />
+      </div>
+
+    </div>
     );
   }
 }
@@ -37,16 +56,17 @@ const mapStateToProps = state => {
   return state
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    levelSubjectSkills: (level) => {
-      const subject = 'MATHEMATICS';
-        dispatch(fetchLevelSubjectSkills(level.value, subject));
-      }
-    }
-  };
+// const mapDispatchToProps = dispatch => {
+
+//   return {
+//     fetchLevelSubject: () => {
+//       console.log(this.state)
+//      dispatch(fetchLevelSubjectSkills('3', 'READING'));
+//     }
+//     }
+//   };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(Level);

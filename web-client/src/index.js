@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import rootReducer from './reducers';
-import { fetchAllSkills} from './actions/index';
+import { fetchAllSkills, fetchLevelSubjectSkills} from './actions/index';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -16,7 +16,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk))
 );
 
-store.dispatch(fetchAllSkills());
+store.dispatch(fetchAllSkills(), fetchLevelSubjectSkills());
 
 ReactDOM.render(
   <Provider store={store}>

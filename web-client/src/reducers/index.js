@@ -19,6 +19,8 @@ import skills from './skill-reducer';
  * of reducer composition, but the abstraction can prevent understanding
  * the simplicity of Redux reducers.
  */
-export default combineReducers({
-    skills: skills
-});
+export default combineReducers(
+  {
+    skills
+  }
+);

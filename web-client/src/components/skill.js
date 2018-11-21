@@ -8,9 +8,10 @@ export default (props) => {
     <div>
       <Card>
         <CardBody>
-          <CardTitle>Level: { props.qeGrade } { props.qeSubject }</CardTitle>
-          <CardSubtitle>{ props.qeObjective }:</CardSubtitle>
+          <CardTitle>{ props.qeLessonName }</CardTitle>
+          <CardSubtitle>{ props.qeDomainName }</CardSubtitle>
           <CardText>
+          { props.qeObjective }{"\n"}
           { props.qeSkill }{"\n"}
           { props.qeSubSkill }{"\n"}
           { props.qeSubSubSkill }

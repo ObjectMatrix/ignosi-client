@@ -11,45 +11,39 @@ const apiUrl = 'http://localhost:8080/';
  * it fires a sync action with the action type and payload.
  * @param {*} skills
  */
-export const fetchSkills = skills => {
+export const fetchSkills = (skills, level, subject) => {
   return {
     type: FETCH_ALL_SKILLS,
-    skills
+    skills,
+    level,
+    subject
   }
 };
 
-export const fetchAllSkills = () => {
+export const fetchAllSkills = (level='all', subject='all') => {
   return (dispatch) => {
     return axios.get(apiUrl+'skills')
       .then(response => {
-        dispatch(fetchSkills(response.data))
+        dispatch(fetchSkills(response.data, level, subject))
       })
       .catch(error => {
         throw(error);
       });
   };
 };
+
 
 /**
  * Level-subject
  */
-export const fetchLevelSubject = skills => {
+export const fetchLevelSubject = (level, subject)  => {
   return {
     type: FETCH_LEVEL_SUBJECT,
-    skills
+    level,
+    subject
   }
 };
 
 export const fetchLevelSubjectSkills = (level, subject) => {
-  const uri = encodeURI(apiUrl + `${level}/${subject}/levelsubject`)
-  console.log(uri)
-  return (dispatch) => {
-    return axios.get(uri)
-      .then(response => {
-        dispatch(fetchLevelSubject(response.data))
-      })
-      .catch(error => {
-        throw(error);
-      });
-  };
-};
+  return (dispatch) => dispatch(fetchLevelSubject(level, subject))
+}
