@@ -1,4 +1,4 @@
-import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT } from '../actions/types';
+import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT, FETCH_QUIZ } from '../actions/types';
 
 /**
  * This file contains pure functions and does not relate to backend service.
@@ -9,12 +9,15 @@ import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT } from '../actions/types';
  * @param {*} action
  */
 export default function skillsReducer(state = {}, action) {
-  // console.log(state)
+  console.log('action.type', action.type)
   switch (action.type) {
     case FETCH_ALL_SKILLS:
       return action.skills;
     case FETCH_LEVEL_SUBJECT:
-      return ({ level: action.level, subject: action.subject})
+      return action.skills;
+      // return ({ level: action.level, subject: action.subject})
+    case FETCH_QUIZ:
+      return action.quizItems
     default:
       return state;
   }

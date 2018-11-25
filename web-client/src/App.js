@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Logo from './logo';
-import SkillList from './containers/skilllist';
+import SkillList from './containers/skill-containers/skilllist';
 
 class App extends Component {
   render() {
