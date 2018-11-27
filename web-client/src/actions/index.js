@@ -18,7 +18,7 @@ const apiUrl = 'http://localhost:8080/';
   * @param {*} level
   * @param {*} subject
   */
-const fetchSkills = (skills, level, subject) => {
+const fetchSkills = (skills = null, level, subject) => {
   return {
     type: FETCH_ALL_SKILLS,
     skills,
@@ -26,7 +26,8 @@ const fetchSkills = (skills, level, subject) => {
     subject
   }
 };
-const fetchQuizItems = (quizItems, lessonName) => {
+
+const fetchQuizItems = (quizItems=null, lessonName) => {
   return {
     type: FETCH_QUIZ,
     quizItems,
@@ -34,7 +35,7 @@ const fetchQuizItems = (quizItems, lessonName) => {
   }
 }
 
-const fetchLevelSubject = (skills, level, subject)  => {
+const fetchLevelSubject = (skills = null, level, subject)  => {
   return {
     type: FETCH_LEVEL_SUBJECT,
     skills,
@@ -79,8 +80,8 @@ export const fetchQuiz = (lessonName) => {
   // console.log(axios.get(`${apiUrl}${lessonName}/questions`))
   return async (dispatch) => {
     try {
-      const response = axios.get(`${apiUrl}${lessonName}/questions`);
-      console.log('quizData: ', response.data);
+      const response = await axios.get(`${apiUrl}${lessonName}/questions`);
+      console.log(response)
       dispatch(fetchQuizItems(response.data, lessonName));
     }
     catch (error) {

@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
-
+// import { FETCH_QUIZ } from '../../actions/types';
+// import Quiz from '../../containers/quiz-containers/quiz'
 
 export default (props) => {
   return (
@@ -16,11 +18,15 @@ export default (props) => {
           { props.qeSubSkill }{"\n"}
           { props.qeSubSubSkill }
           </CardText>
-          <Button>View</Button> <Button>Edit</Button>
+          {/* <Button onClick={props.handle}>View: {props.qeLessonName}</Button> */}
+          <Link key={props.qeLessonName} to={{ pathname: `/quiz/${props.qeLessonName}`, state: { lessonName:`${props.qeLessonName}`}}}>
+            <Button>View: {props.qeLessonName}</Button>
+          </Link>
+          {/* <Button>Edit</Button> */}
         </CardBody>
       </Card>
     </div>
   );
  };
-
+//onClick={()=>{this.handleRemove(id)}}
 

@@ -7,23 +7,34 @@ class Quiz extends React.Component {
   constructor (props) {
     super (props)
     this.state = props
-    console.log('props', props)
+  }
+  componentDidMount = () => {
+    const {id} = this.props.match.params
+    console.log('lessonName>', id, this.state )
+    this.props.fetchQuiz(id)
+
+    this.props.quizItems.map((v,idx, arr) => {
+      console.log(v)
+    })
   }
 
   render() {
     return(
       <div>
+
       {
         !!this.props.quizItems.length && this.props.quizItems.map((q) => {
-            console.log('LESSONNAME:',this.props.lessonName)
-          return (<span> </span>)
+          <span key={q.qbQuestionId}> prob</span>
         })
       }
 
-      <div  className="col-md-10">
-      Hello World Test
-      {this.props.quizItems.length}
-      </div>
+
+     total items:  {this.props.quizItems.length}
+    {
+
+        console.log(this.props.quizItems)
+
+    }
     </div>
     )
   }

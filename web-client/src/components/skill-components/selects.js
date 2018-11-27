@@ -23,6 +23,9 @@ export default (props) => {
             onChange={handleSelect}
           />
       </div>
+
+        <input  className="searchbox" type="search" id="search" placeholder="Search..." />
+
     </div>
   );
  };

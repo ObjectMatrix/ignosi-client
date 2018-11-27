@@ -10,6 +10,7 @@ class SkillList extends React.Component {
     super(props)
     this.state = props
     this.handleSelect = this.handleSelect.bind(this)
+    // this.viewHandle = this.viewHandle.bind(true)
   }
 
   componentDidMount = () => {
@@ -19,13 +20,15 @@ class SkillList extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState)  {
-    console.log(nextProps.skills.length)
     if (nextProps.skills.length <= 0 ) {
       return false
     } else {
       return true
     }
   }
+  // viewHandle (e) {
+  //   console.log('>>>>> ', e);
+  // }
 
   handleSelect(e) {
     const type = e.type
@@ -36,6 +39,8 @@ class SkillList extends React.Component {
       case 'subject':
         this.subject = e.value
         break
+      default:
+        break
     }
     if(this.level && this.subject) {
       this.props.fetchLevelSubjectSkills(this.level, this.subject)
@@ -44,7 +49,7 @@ class SkillList extends React.Component {
   }
 
   render () {
-    if(!!this.props.skills.length) {
+    if(this.props.skills != null && !!this.props.skills.length) {
       // this.keysLevel = this.props.skills.map((level) => ({ value: level.qeGrade, label: level.qeGrade }));
       // this.uniKeysLevel = [...(new Set(this.keysLevel.map(({ value }) => value)))];
       this.uniKeysLevel = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -63,12 +68,12 @@ class SkillList extends React.Component {
     return (
       <div>
         <div>
-          { !!this.props.skills.length &&
+          { (this.props.skills != null && !!this.props.skills.length) &&
           <Level level={this.optionsLevel}
           subject ={this.optionsSubject}  handle={this.handleSelect} /> }
         </div>
           {
-            !!this.props.skills.length && this.props.skills.map((skill) => {
+            (this.props.skills != null && !!this.props.skills.length) && this.props.skills.map((skill) => {
               return (<Card key={skill.qeSerialNumber} {...skill} />)
             })
           }

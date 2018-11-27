@@ -8,7 +8,7 @@ import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT, FETCH_QUIZ } from '../actions/ty
  * @param {*} state
  * @param {*} action
  */
-export default function skillsReducer(state = {}, action) {
+export default function reducer(state = {}, action = {}) {
   console.log('action.type', action.type)
   switch (action.type) {
     case FETCH_ALL_SKILLS:
