@@ -1,40 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchQuiz } from '../../actions/';
+import QuestionItem from '../../components/quiz-components/question-item';
+import { fetchQuiz } from '../../actions';
+
 import '../../css/common.css';
 
-class Quiz extends React.Component {
+class Question extends React.Component {
   constructor (props) {
     super (props)
     this.state = props
   }
   componentDidMount = () => {
     const {id} = this.props.match.params
-    console.log('lessonName>', id, this.state )
+    console.log('lessonName  >', id, 'ThisState: ', this.state )
     this.props.fetchQuiz(id)
-
-    this.props.quizItems.map((v,idx, arr) => {
-      console.log(v)
-    })
   }
 
   render() {
-    return(
+    console.log('THETOTAL:PASSAGES', this.props.skills.passages)
+    console.log('THETOTAL:ANSWERS', this.props.skills.answers)
+    const temp = this.props.skills.passages.filter(item => item.pbPassageID==="4FE56FD2-4FF8-4FCA-94C8-39166C64B155")
+    console.log('FILTERED: ', temp)
+    return (
       <div>
-
       {
-        !!this.props.quizItems.length && this.props.quizItems.map((q) => {
-          <span key={q.qbQuestionId}> prob</span>
+        (this.props.skills.quizItems!= null && !!this.props.skills.quizItems.length)
+        && this.props.skills.quizItems.map((q, index) => {
+
+          return (<QuestionItem key={index} {...q}  />)
         })
       }
-
-
-     total items:  {this.props.quizItems.length}
-    {
-
-        console.log(this.props.quizItems)
-
-    }
     </div>
     )
   }
@@ -60,4 +55,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Quiz);
+)(Question);

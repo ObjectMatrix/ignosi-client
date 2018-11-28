@@ -1,4 +1,5 @@
-import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT, FETCH_QUIZ } from '../actions/types';
+import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT,
+  FETCH_QUIZ, FETCH_PASSAGES, FETCH_ANSWERS } from '../actions/types';
 
 /**
  * This file contains pure functions and does not relate to backend service.
@@ -8,16 +9,37 @@ import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT, FETCH_QUIZ } from '../actions/ty
  * @param {*} state
  * @param {*} action
  */
-export default function reducer(state = {}, action = {}) {
+const initialState = {
+  skills: [],
+  quizItems: [],
+  passages:[],
+  answers: [],
+  hint: [],
+  solution: []
+};
+
+export default function reducer(state = initialState, action) {
   console.log('action.type', action.type)
   switch (action.type) {
     case FETCH_ALL_SKILLS:
-      return action.skills;
+      return {...state, skills: state.skills.concat(action.skills) }
+
     case FETCH_LEVEL_SUBJECT:
-      return action.skills;
-      // return ({ level: action.level, subject: action.subject})
+      state = initialState
+      return {...state, skills: state.skills.concat(action.skills) }
+
     case FETCH_QUIZ:
-      return action.quizItems
+      state.quizItems = initialState.quizItems
+      return {...state, quizItems: state.quizItems.concat(action.quizItems) }
+
+    case FETCH_PASSAGES:
+      state.passages = initialState.passages
+      return {...state, passages: state.passages.concat(action.passages) }
+
+    case FETCH_ANSWERS:
+      state.answers = initialState.answers
+      return {...state, answers: state.answers.concat(action.answers) }
+
     default:
       return state;
   }

@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import skills from './reducer';
-import quizItems from './reducer'
 /**
  * The combineReducers helper function turns an object
  * whose values are different reducing functions into a single
@@ -22,7 +21,6 @@ import quizItems from './reducer'
  */
 export default combineReducers(
   {
-    skills,
-    quizItems
+    skills
   }
 );

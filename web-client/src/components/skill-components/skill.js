@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
-// import { FETCH_QUIZ } from '../../actions/types';
-// import Quiz from '../../containers/quiz-containers/quiz'
 
 export default (props) => {
   return (

@@ -1,7 +1,9 @@
 
-import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT, FETCH_QUIZ } from './types';
-import axios from 'axios';
-const apiUrl = 'http://localhost:8080/';
+import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT,
+  FETCH_QUIZ, FETCH_PASSAGES , FETCH_ANSWERS} from './types'
+import { apiUrl, skillsUrl } from '../constants'
+import axios from 'axios'
+
 
 /**
  * Here, we have defined the sync and async actions.
@@ -18,36 +20,49 @@ const apiUrl = 'http://localhost:8080/';
   * @param {*} level
   * @param {*} subject
   */
-const fetchSkills = (skills = null, level, subject) => {
+const fetchSkills = skills => {
   return {
     type: FETCH_ALL_SKILLS,
     skills,
-    level,
-    subject
   }
 };
 
-const fetchQuizItems = (quizItems=null, lessonName) => {
+const fetchQuizItems = quizItems => {
   return {
     type: FETCH_QUIZ,
     quizItems,
-    lessonName
   }
 }
 
-const fetchLevelSubject = (skills = null, level, subject)  => {
+const fetchLevelSubject = skills => {
   return {
     type: FETCH_LEVEL_SUBJECT,
     skills,
-    level,
-    subject
   }
 }
-export const fetchAllSkills = (level, subject) => {
+
+const fetchPassageItems = passages => {
+  return {
+    type: FETCH_PASSAGES,
+    passages
+  }
+}
+
+const fetchAnswerItems = answers => {
+  return {
+    type: FETCH_ANSWERS,
+    answers
+  }
+}
+/**
+ * ___________________________________________________________
+ */
+
+export const fetchAllSkills = (level = null, subject = null) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`${apiUrl}skills`);
-      dispatch(fetchSkills(response.data, level, subject));
+      const response = await axios.get(skillsUrl);
+      dispatch(fetchSkills(response.data));
     }
     catch (error) {
       throw (error);
@@ -63,9 +78,8 @@ export const fetchAllSkills = (level, subject) => {
 export const fetchLevelSubjectSkills = (level, subject) => {
   return async (dispatch) => {
     try {
-      // path: '/{level}/{subject}/levelsubject',
         const response = await axios.get(`${apiUrl}${level}/${subject}/levelsubject`);
-        dispatch(fetchLevelSubject(response.data, level, subject));
+        dispatch(fetchLevelSubject(response.data));
     }
     catch (error) {
       throw (error);
@@ -74,18 +88,59 @@ export const fetchLevelSubjectSkills = (level, subject) => {
 }
 
 /**
- * Quiz Items Fetch
+ * Quiz Items Fetch also fetches Questions
  */
-export const fetchQuiz = (lessonName) => {
-  // console.log(axios.get(`${apiUrl}${lessonName}/questions`))
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(`${apiUrl}${lessonName}/questions`);
-      console.log(response)
-      dispatch(fetchQuizItems(response.data, lessonName));
+// export const fetchQuiz = (lessonName) => {
+//   /**
+//   - console.log(axios.get(`${apiUrl}${lessonName}/questions`))
+//   - await axios.get(`${apiUrl}${lessonName}/quiz`);
+//   */
+//   return async (dispatch) => {
+//     try {
+//     const response = await axios.get(`${apiUrl}${lessonName}/questions`);
+//     // const response = await axios.get(`${apiUrl}${lessonName}/quiz`);
+//       dispatch(fetchQuizItems(response.data));
+//     }
+//     catch (error) {
+//       throw (error);
+//     }
+//   };
+// };
+
+  /**
+  - console.log(axios.get(`${apiUrl}${lessonName}/questions`))
+  - await axios.get(`${apiUrl}${lessonName}/quiz`);
+  */
+  export const fetchQuiz = (lessonName) => {
+    return async (dispatch) => {
+      try
+      {
+          axios.all([
+            axios.get(`${apiUrl}${lessonName}/questions`),
+            axios.get(`${apiUrl}${lessonName}/passage`),
+            axios.get(`${apiUrl}${lessonName}/answer`)
+        ]).then(axios.spread((respQuestions, respPassages, respAnswers) => {
+          dispatch(fetchQuizItems(respQuestions.data))
+          dispatch(fetchPassageItems(respPassages.data))
+          dispatch(fetchAnswerItems(respAnswers.data))
+        }))
+      } catch (error) {
+        throw (error)
+      }
     }
-    catch (error) {
-      throw (error);
-    }
-  };
-};
+  }
+
+/**
+ * passageId
+ * @param {*} id
+ */
+// export const fetchPassage = (lessonName) => {
+//   return async (dispatch) => {
+//     try {
+//     const response = await axios.get(`${apiUrl}${lessonName}/passage`)
+//     dispatch(fetchPassageItems(response.data))
+//     } catch (error) {
+//       throw (error)
+//     }
+//   }
+// }

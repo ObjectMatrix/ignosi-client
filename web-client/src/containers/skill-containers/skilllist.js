@@ -49,7 +49,7 @@ class SkillList extends React.Component {
   }
 
   render () {
-    if(this.props.skills != null && !!this.props.skills.length) {
+    if(this.props.skills.skills != null && !!this.props.skills.skills.length) {
       // this.keysLevel = this.props.skills.map((level) => ({ value: level.qeGrade, label: level.qeGrade }));
       // this.uniKeysLevel = [...(new Set(this.keysLevel.map(({ value }) => value)))];
       this.uniKeysLevel = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -63,17 +63,17 @@ class SkillList extends React.Component {
       'SOCIAL STUDIES', 'U.S. HISTORY', 'WORLD GEOGRAPHY', 'WORLD HISTORY', 'WRITING'
     ]
       this.optionsSubject = this.uniKeysSubject.map((subject) => ({ value: subject, label: subject, type: 'subject' }));
-
     }
     return (
       <div>
         <div>
-          { (this.props.skills != null && !!this.props.skills.length) &&
+          { (this.props.skills.skills != null && !!this.props.skills.skills.length) &&
           <Level level={this.optionsLevel}
           subject ={this.optionsSubject}  handle={this.handleSelect} /> }
         </div>
           {
-            (this.props.skills != null && !!this.props.skills.length) && this.props.skills.map((skill) => {
+            (this.props.skills.skills != null && !!this.props.skills.skills.length) && this.props.skills.skills.map((skill) => {
+
               return (<Card key={skill.qeSerialNumber} {...skill} />)
             })
           }
