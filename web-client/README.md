@@ -1,7 +1,7 @@
 
 # ignosi
 
-![Drag Racing](./images/ignosi.png)  
+![Drag Racing](https://github.com/ObjectMatrix/ignosi/blob/master/ignosi.png)  
 
 
 η γνώση
