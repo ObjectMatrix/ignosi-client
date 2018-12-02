@@ -10,7 +10,7 @@ class App extends Component {
     <React.Fragment>
     <BrowserRouter>
       <Switch>
-      <Route path='/quiz/:id' component={Question} />
+      <Route path='/:id' component={Question} />
         <div className="col-md-10">
           <Logo />
           <SkillList />

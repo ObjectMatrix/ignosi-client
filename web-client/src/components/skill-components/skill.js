@@ -17,7 +17,7 @@ export default (props) => {
           { props.qeSubSubSkill }
           </CardText>
           {/* <Button onClick={props.handle}>View: {props.qeLessonName}</Button> */}
-          <Link key={props.qeLessonName} to={{ pathname: `/quiz/${props.qeLessonName}`, state: { lessonName:`${props.qeLessonName}`}}}>
+          <Link key={props.qeLessonName} to={{ pathname: `/${props.qeLessonName}`, state: { lessonName:`${props.qeLessonName}`}}}>
             <Button>View: {props.qeLessonName}</Button>
           </Link>
           {/* <Button>Edit</Button> */}

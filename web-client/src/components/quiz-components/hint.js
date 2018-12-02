@@ -6,15 +6,6 @@ import { Card, CardText, CardBody,
 
 export default (props) => {
   //console.log(props.hints)
-  return (
-    <div>
-      <Card>
-        <CardBody>
-          <CardText
-          dangerouslySetInnerHTML={{ __html: props.hint }}
-          />
-        </CardBody>
-      </Card>
-    </div>
+  return (<div className="hint" dangerouslySetInnerHTML={{ __html: props.hint }} />
   );
  };
