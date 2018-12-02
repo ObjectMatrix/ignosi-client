@@ -6,6 +6,7 @@ export default (props) => {
   const optionsLevel = props.level
   const optionsSubject = props.subject
   const handleSelect = props.handle
+  // const searchSkills = props.searchSkills
   return (
     <div>
       <div className="divStyleLevel">
@@ -24,7 +25,7 @@ export default (props) => {
           />
       </div>
 
-        <input  className="searchbox" type="search" id="search" placeholder="Search..." />
+      {/* <input className="searchbox" onKeyDown={searchSkills} type="search" id="search" placeholder=" Search..." /> */}
 
     </div>
   );

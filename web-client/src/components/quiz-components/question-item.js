@@ -1,7 +1,8 @@
 import React from 'react';
 
 export default (props) => {
-  return (<div dangerouslySetInnerHTML={{ __html: props.question }} />)
+  const contents = ['(', props.seq,')', props.question].join(' ')
+  return (<div className="question" dangerouslySetInnerHTML={{ __html: contents}} />)
  }
 
 

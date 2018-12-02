@@ -1,13 +1,14 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 // import get from 'lodash.get'
 // import keyBy from 'lodash.keyby'
 import { removeTilde } from '../../utils/'
-import QuestionItem from '../../components/quiz-components/question-item';
-import PassageItem from '../../components/quiz-components/passage-item';
-import AnswerItem from '../../components/quiz-components/answer-item';
+import QuestionItem from '../../components/quiz-components/question-item'
+import PassageItem from '../../components/quiz-components/passage-item'
+import AnswerItem from '../../components/quiz-components/answer-item'
 import { fetchQuiz } from '../../actions';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
+// import '../../css/common.css'
 
 class Question extends React.Component {
   constructor (props) {
@@ -46,26 +47,11 @@ class Question extends React.Component {
       let questionId = item.abQuestionId
       let answer = removeTilde(item.abAnswer)
       let status = item.abCorrectAnswer
-      return `<input type="radio" name="${questionId}" value="${status}" id="${answerId}"
-      onChange="alert(this.value)"/> ${answer}`
+      let radioPart = `<input type="radio" name="${questionId}" value="${status}" id="${answerId}"
+      onChange="alert(this.value)"/> `
+      return `${radioPart}${answer}`
     }
   })
-
-  /**
-   * A~ etc. being used by authors
-   * when intended sequence of listing is intended
-   */
-  // removeTilde = (str) => {
-  //     let mapObj = {
-  //       'A~': '',
-  //       'B~': '',
-  //       'C~': '',
-  //       'D~': '',
-  //       'E~': '',
-  //       'F~': ''
-  //     }
-  //     return str.replace(/A~|B~|C~|D~|E~/gi, (matched) =>  mapObj[matched])
-  // }
 
   render() {
     return (
@@ -74,11 +60,11 @@ class Question extends React.Component {
         (this.props.skills.quizItems!= null && !!this.props.skills.quizItems.length)
         && this.props.skills.quizItems.map((q, index) => {
           let passage = this.getPassage(q.qbPassageId).join('')
-          let answers = this.getAnswers(q.qbQuestionId).join(' ')
+          let answers = this.getAnswers(q.qbQuestionId).join('')
           return (
             <div>
             <PassageItem key={q.qbPassageId} passage={passage} />
-            <QuestionItem key={q.qbQuestionId} question={q.qbQuestion}  />
+            <QuestionItem key={q.qbQuestionId} question={q.qbQuestion} seq={index+1}  />
             <AnswerItem key={q.SerialNumber} answers={answers} />
             </div>
             )

@@ -1,5 +1,5 @@
 import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT,
-  FETCH_QUIZ, FETCH_PASSAGES, FETCH_ANSWERS } from '../actions/types';
+  FETCH_QUIZ, FETCH_PASSAGES, FETCH_ANSWERS, FETCH_TERM_SEARCH } from '../actions/types';
 
 /**
  * This file contains pure functions and does not relate to backend service.
@@ -19,9 +19,13 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
-  console.log('action.type', action.type)
+  // console.log('action.type', action.type)
   switch (action.type) {
     case FETCH_ALL_SKILLS:
+      return {...state, skills: state.skills.concat(action.skills) }
+
+    case FETCH_TERM_SEARCH:
+      state.skills = initialState.skills
       return {...state, skills: state.skills.concat(action.skills) }
 
     case FETCH_LEVEL_SUBJECT:

@@ -1,6 +1,6 @@
 
 import { FETCH_ALL_SKILLS, FETCH_LEVEL_SUBJECT,
-  FETCH_QUIZ, FETCH_PASSAGES , FETCH_ANSWERS} from './types'
+  FETCH_QUIZ, FETCH_PASSAGES, FETCH_ANSWERS, FETCH_TERM_SEARCH } from './types'
 import { apiUrl, skillsUrl } from '../constants'
 import axios from 'axios'
 
@@ -54,6 +54,13 @@ const fetchAnswerItems = answers => {
     answers
   }
 }
+
+const fetchTermSearch = skills => {
+  return {
+    type: FETCH_TERM_SEARCH,
+    skills
+  }
+}
 /**
  * ___________________________________________________________
  */
@@ -87,26 +94,6 @@ export const fetchLevelSubjectSkills = (level, subject) => {
   };
 }
 
-/**
- * Quiz Items Fetch also fetches Questions
- */
-// export const fetchQuiz = (lessonName) => {
-//   /**
-//   - console.log(axios.get(`${apiUrl}${lessonName}/questions`))
-//   - await axios.get(`${apiUrl}${lessonName}/quiz`);
-//   */
-//   return async (dispatch) => {
-//     try {
-//     const response = await axios.get(`${apiUrl}${lessonName}/questions`);
-//     // const response = await axios.get(`${apiUrl}${lessonName}/quiz`);
-//       dispatch(fetchQuizItems(response.data));
-//     }
-//     catch (error) {
-//       throw (error);
-//     }
-//   };
-// };
-
   /**
   - console.log(axios.get(`${apiUrl}${lessonName}/questions`))
   - await axios.get(`${apiUrl}${lessonName}/quiz`);
@@ -131,16 +118,18 @@ export const fetchLevelSubjectSkills = (level, subject) => {
   }
 
 /**
- * passageId
+ * search term
  * @param {*} id
  */
-// export const fetchPassage = (lessonName) => {
-//   return async (dispatch) => {
-//     try {
-//     const response = await axios.get(`${apiUrl}${lessonName}/passage`)
-//     dispatch(fetchPassageItems(response.data))
-//     } catch (error) {
-//       throw (error)
-//     }
-//   }
-// }
+
+export const fetchSearch = (term) => {
+  return async (dispatch) => {
+    try {
+    const response = await axios.get(`${apiUrl}${term}/search`)
+    console.log('search: ',response.data)
+    dispatch(fetchTermSearch(response.data))
+    } catch (error) {
+      throw (error)
+    }
+  }
+}

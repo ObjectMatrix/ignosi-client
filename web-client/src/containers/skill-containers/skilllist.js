@@ -1,8 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Card from '../../components/skill-components/skill';
-import Level from '../../components/skill-components/selects';
-import { fetchLevelSubjectSkills } from '../../actions/';
+import React from 'react'
+import { connect } from 'react-redux'
+import Card from '../../components/skill-components/skill'
+import Level from '../../components/skill-components/selects'
+import Search from '../../components/skill-components/search'
+import { fetchLevelSubjectSkills, fetchSearch } from '../../actions/';
 import '../../css/common.css';
 
 class SkillList extends React.Component {
@@ -10,7 +11,7 @@ class SkillList extends React.Component {
     super(props)
     this.state = props
     this.handleSelect = this.handleSelect.bind(this)
-    // this.viewHandle = this.viewHandle.bind(true)
+    this.searchKeyPress = this.searchKeyPress.bind(this)
   }
 
   componentDidMount = () => {
@@ -19,16 +20,32 @@ class SkillList extends React.Component {
   componentDidUpdate = (prevProps) => {
   }
 
+  /**
+   * empty skillset, do not update
+   * @param {*} nextProps
+   * @param {*} nextState
+   */
   shouldComponentUpdate(nextProps, nextState)  {
-    if (nextProps.skills.length <= 0 ) {
+    if (nextProps.skills.skills.length <= 0 ) {
       return false
     } else {
       return true
     }
   }
-  // viewHandle (e) {
-  //   console.log('>>>>> ', e);
-  // }
+  searchKeyPress(e) {
+    try {
+    if(e.key === 'Enter') {
+      this.searchTerm = e.target.value
+      if(this.searchTerm )
+        this.props.fetchSearch(this.searchTerm)
+
+      }
+
+      } catch ( e ) {
+        console.log(e)
+      }
+    }
+
 
   handleSelect(e) {
     const type = e.type
@@ -44,7 +61,7 @@ class SkillList extends React.Component {
     }
     if(this.level && this.subject) {
       this.props.fetchLevelSubjectSkills(this.level, this.subject)
-      console.log(this.level, this.subject)
+      // console.log(this.level, this.subject)
     }
   }
 
@@ -66,17 +83,19 @@ class SkillList extends React.Component {
     }
     return (
       <div>
-        <div>
-          { (this.props.skills.skills != null && !!this.props.skills.skills.length) &&
-          <Level level={this.optionsLevel}
-          subject ={this.optionsSubject}  handle={this.handleSelect} /> }
-        </div>
-          {
-            (this.props.skills.skills != null && !!this.props.skills.skills.length) && this.props.skills.skills.map((skill) => {
+        { this.props.skills.skills !== null && !!this.props.skills.skills.length &&
+          <Search searchHandle={this.searchKeyPress} />
+        }
 
-              return (<Card key={skill.qeSerialNumber} {...skill} />)
-            })
-          }
+        { this.props.skills.skills !== null && !!this.props.skills.skills.length &&
+          <Level level={this.optionsLevel} subject={this.optionsSubject}  handle={this.handleSelect} />
+        }
+
+        {
+          (this.props.skills.skills != null && !!this.props.skills.skills.length) && this.props.skills.skills.map((skill) => {
+            return (<Card key={skill.qeSerialNumber} {...skill} />)
+          })
+        }
       </div>
       );
   }
@@ -90,6 +109,7 @@ class SkillList extends React.Component {
 
   const mapDispatchToProps = dispatch => ({
     fetchLevelSubjectSkills: (level, subject) => dispatch(fetchLevelSubjectSkills(level, subject)),
+    fetchSearch: (searchTerm) => dispatch(fetchSearch(searchTerm))
   })
 
 export default connect(
