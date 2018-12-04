@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom'
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 
-import App from './App';
-// import Quiz from './containers/quiz-containers/quiz';
+import App from './containers/app';
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import rootReducer from './reducers';
@@ -28,8 +27,10 @@ store.dispatch(fetchAllSkills());
 
 ReactDOM.render(
   <Provider store={store}>
-  <div>
-    <App />
-  </div>
+  <Router>
+    <Switch>
+      <Route exact path="/" component={App} />
+    </Switch>
+  </Router>
   </Provider>, document.getElementById('root'));
 

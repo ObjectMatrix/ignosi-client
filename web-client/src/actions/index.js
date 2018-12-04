@@ -61,6 +61,8 @@ const fetchTermSearch = skills => {
     skills
   }
 }
+
+
 /**
  * ___________________________________________________________
  */
@@ -126,10 +128,10 @@ export const fetchSearch = (term) => {
   return async (dispatch) => {
     try {
     const response = await axios.get(`${apiUrl}${term}/search`)
-    console.log('search: ',response.data)
     dispatch(fetchTermSearch(response.data))
     } catch (error) {
       throw (error)
     }
   }
 }
+
