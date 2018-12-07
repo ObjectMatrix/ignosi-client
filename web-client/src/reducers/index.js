@@ -1,26 +1,30 @@
-import { combineReducers } from 'redux';
-import skills from './reducer';
-/**
- * The combineReducers helper function turns an object
- * whose values are different reducing functions into a single
- * reducing function you can pass to createStore.
- * The resulting reducer calls every child reducer,
- * and gathers their results into a single state object.
- * --------------------------------------
- *   combineReducers
- * --------------------------------------
- * Redux uses a single root reducer function that accepts the current state
- * (and an action) as input and returns a new state. Users of Redux may write
- * the root reducer function in many different ways, but a recommended common
- * practice is breaking up the state object into slices and using a separate
- * sub reducer to operate on each slice of the state. Usually,
- * Redux's helper utility, combineReducers is used to do this.
- * combineReducers is a nice shortcut because it encourages the good practice
- * of reducer composition, but the abstraction can prevent understanding
- * the simplicity of Redux reducers.
- */
-export default combineReducers(
-  {
-    skills
+// action types
+import { API_CALL_REQUEST, API_CALL_SUCCESS, API_CALL_FAILURE,
+  API_CALL_LEVEL_SUBJECT_REQUEST } from '../actions/types'
+
+
+// reducer with initial state
+const initialState = {
+  fetching: false,
+  skills: null,
+  level: null,
+  subject: null,
+  error: null
+};
+
+export function reducer(state = initialState, action) {
+  switch (action.type) {
+    case API_CALL_REQUEST:
+      return { ...state, fetching: true, skills: null, level: action.level, subject: action.subject, error: null };
+    case API_CALL_SUCCESS:
+      return { ...state, fetching: false, skills: action.skills, level: action.level, subject: action.subject, error: null  };
+    case API_CALL_FAILURE:
+      return { ...state, fetching: false, skills: null, error: action.error };
+    case API_CALL_LEVEL_SUBJECT_REQUEST:
+      return { ...state, fetching: false, skills: action.skills,
+        level: action.level, subject: action.subject, error: null  };
+
+    default:
+      return state;
   }
-);
+}
