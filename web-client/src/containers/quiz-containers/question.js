@@ -8,7 +8,7 @@ import PassageItem from '../../components/quiz-components/passage-item'
 import AnswerItem from '../../components/quiz-components/answer-item'
 import AnswerKeys from '../../components/quiz-components/print-keys'
 
-import { fetchQuiz } from '../../actions';
+// import { fetchQuiz } from '../../store/actions';
 
 // import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 // import '../../css/common.css'
@@ -27,7 +27,7 @@ class Question extends React.Component {
   componentDidMount = () => {
     const {id} = this.props.match.params
     // console.log('lessonName  >', id, 'ThisState: ', this.state )
-    this.props.fetchQuiz(id)
+    //this.props.fetchQuiz(id)
     // console.log(this.state)
 
   }
@@ -117,7 +117,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  fetchQuiz: (lessonName) => dispatch(fetchQuiz(lessonName))
+ // fetchQuiz: (lessonName) => dispatch(fetchQuiz(lessonName))
 })
 
 export default connect(

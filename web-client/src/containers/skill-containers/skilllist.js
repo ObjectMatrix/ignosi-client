@@ -3,15 +3,14 @@ import { connect } from 'react-redux'
 import Card from '../../components/skill-components/skill'
 import Level from '../../components/skill-components/selects'
 import Search from '../../components/skill-components/search'
-// import { fetchLevelSubjectSkills, fetchSearch } from '../../actions/';
-// import { API_CALL_REQUEST } from '../../actions/types'
-import { API_CALL_REQUEST, API_CALL_LEVEL_SUBJECT_REQUEST } from '../../actions/types'
+
+import { API_CALL_REQUEST, API_CALL_LEVEL_SUBJECT_REQUEST } from '../../store/actions/types'
+import { ALL_SKILL, LEVEL_SUBJECT_SKILL, SKILL_SEARCH } from '../../store/actions/types'
 import '../../css/common.css';
 
 class SkillList extends React.Component {
   constructor(props) {
     super(props)
-    // this.state = props
     this.handleSelect = this.handleSelect.bind(this)
     this.searchKeyPress = this.searchKeyPress.bind(this)
   }
@@ -35,14 +34,11 @@ class SkillList extends React.Component {
       this.searchTerm = e.target.value
       if(this.searchTerm )
         this.props.fetchSearch(this.searchTerm)
-
       }
-
       } catch ( e ) {
         console.log(e)
       }
     }
-
 
   handleSelect(e) {
     const type = e.type
@@ -57,13 +53,13 @@ class SkillList extends React.Component {
         break
     }
     if(this.level && this.subject) {
-      this.props.fetchLevelSubjectSkills(this.level, this.subject)
+      !!this.props.onRequestLevelSubjectSkills && this.props.onRequestLevelSubjectSkills(this.level, this.subject)
     }
   }
 
     render() {
-      console.log(this.props)
-      const { fetching, skills, onRequestSkills, fetchLevelSubjectSkills, error } = this.props;
+      console.log('>>>>', this.props)
+      const { fetching, skills, onRequestAllSkills, onRequestLevelSubjectSkills, fetchSearch, error } = this.props;
 
       this.uniKeysLevel = [1,2,3,4,5,6,7,8,9,10,11,12]
       this.optionsLevel = this.uniKeysLevel.map((level) => ({ value: level, label: level, type: 'level' }));
@@ -82,19 +78,21 @@ class SkillList extends React.Component {
           {fetching ? (
             <button disabled>Fetching...</button>
           ) : (
-            <button onClick={onRequestSkills}>Request Skills</button>
+          <div>
+            <button onClick={this.props.onRequestAllSkills}>View All</button>
+            <Search searchHandle={this.searchKeyPress} />
+          </div>
           )}
 
-          <Search searchHandle={this.searchKeyPress} />
 
-          <Level level={this.optionsLevel} subject={this.optionsSubject}  handle={this.handleSelect} />
-
-
+        <div>
+        <Level level={this.optionsLevel} subject={this.optionsSubject}  handle={this.handleSelect} />
         {
           (skills != null && !!skills.length) && skills.map((skill) => {
             return (<Card key={skill.qeSerialNumber} {...skill} />)
           })
         }
+      </div>
       </div>
       );
   }
@@ -113,19 +111,24 @@ class SkillList extends React.Component {
 
   const mapDispatchToProps = dispatch => {
     return {
-      onRequestSkills: (level, subject) => dispatch({
-      type: API_CALL_REQUEST,
-      level,
-      subject
-      }),
+      onRequestAllSkills: () => dispatch({ type: 'ALL_SKILLS',
+      level: null,
+      subject: null
+    }),
 
-      fetchLevelSubjectSkills: (level, subject) => dispatch({
-        type: API_CALL_LEVEL_SUBJECT_REQUEST,
-        level,
-        subject
+      onRequestLevelSubjectSkills: (level, subject) => dispatch({
+        type: 'LEVEL_SUBJECT_SKILL',
+          level,
+          subject
+        }),
+
+        fetchSearch: searchTerm => dispatch({
+          type : 'SKILL_SEARCH',
+          searchTerm
         }),
     }
   }
+
 
 export default connect(
   mapStateToProps,
