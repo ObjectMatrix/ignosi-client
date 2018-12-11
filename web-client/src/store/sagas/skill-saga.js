@@ -1,4 +1,4 @@
-import { call, put, takeLatest, all, takeEvery, take } from 'redux-saga/effects'
+import { call, put, takeLatest, all, takeEvery, take, select } from 'redux-saga/effects'
 import { apiUrl, skillsUrl } from '../../constants'
 import axios from 'axios'
 import { setSkills }  from '../actions/action-skill'
@@ -10,13 +10,20 @@ function* watchAll() {
   yield takeEvery(LEVEL_SUBJECT_SKILL, workerAllSkillSagaLevelSubject)
   yield takeEvery(SKILL_SEARCH, workerSearch)
   yield takeLatest(ITEMS_BY_LESSON, workerItems)
+  /**
+   * log actions
+   */
+  while (true) {
+    const action = yield take ('*')
+    const state = yield select()
+    console.log('ACTION: ', action, 'SAGA-STATE: ', state)
+  }
 }
 
 function* workerAllSkillSagaLevelSubject(action) {
   try {
     const response = yield call(fetchSkillsLevelSubject, action)
     const skills = response.data;
-    console.log(skills)
     // dispatch a success action to the store with the new dog
     yield put({ type: SUCCESS, skills });
 
@@ -40,7 +47,6 @@ function* workerAllSkillSaga(action) {
   try {
     const response = yield call(fetchSkills);
     const skills = response.data;
-    console.log('ALL_SKILL: ', skills)
     // dispatch a success action to the store with the new dog
     yield put({ type: SUCCESS, skills });
   } catch (error) {
@@ -62,7 +68,6 @@ function* workerSearch(action) {
   try {
     const response = yield call(fetchSearchedSkills, action)
     const skills = response.data;
-    console.log(skills)
     // dispatch a success action to the store with the new dog
     yield put({ type: SUCCESS, skills });
 
@@ -83,7 +88,6 @@ function* workerItems(action) {
   try {
     const response = yield call(fetchItems, action)
     const skills = response.data;
-    console.log(skills)
     // dispatch a success action to the store with the new dog
     yield put({ type: SUCCESS, skills });
 
@@ -98,11 +102,5 @@ function fetchItems (action) {
     url: `${apiUrl}${action.lessonName}/questions`
   })
 }
-// function* logActions() {
-//   while (true) {
-//     const action = yield take()
-//     console.log('log action: ', action)
-//   }
-// }
 
 export default watchAll
