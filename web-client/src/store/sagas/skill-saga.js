@@ -6,18 +6,18 @@ import { ALL_SKILLS, LEVEL_SUBJECT_SKILL, SKILL_SEARCH,
           ITEMS_BY_LESSON, SUCCESS, FAILURE } from '../actions/types'
 
 function* watchAll() {
-  yield takeEvery(ALL_SKILLS, workerAllSkillSaga)
-  yield takeEvery(LEVEL_SUBJECT_SKILL, workerAllSkillSagaLevelSubject)
-  yield takeEvery(SKILL_SEARCH, workerSearch)
+  yield takeLatest(ALL_SKILLS, workerAllSkillSaga)
+  yield takeLatest(LEVEL_SUBJECT_SKILL, workerAllSkillSagaLevelSubject)
+  yield takeLatest(SKILL_SEARCH, workerSearch)
   yield takeLatest(ITEMS_BY_LESSON, workerItems)
   /**
    * log actions
    */
-  while (true) {
-    const action = yield take ('*')
-    const state = yield select()
-    console.log('ACTION: ', action, 'SAGA-STATE: ', state)
-  }
+  // while (true) {
+  //   const action = yield take ('*')
+  //   const state = yield select()
+  //   // console.log('ACTION: ', action, 'SAGA-STATE: ', state)
+  // }
 }
 
 function* workerAllSkillSagaLevelSubject(action) {

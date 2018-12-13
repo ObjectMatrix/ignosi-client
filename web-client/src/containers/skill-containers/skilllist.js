@@ -1,11 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+// import { map } from 'ramda'
 import Card from '../../components/skill-components/skill'
 import Level from '../../components/skill-components/selects'
 import Search from '../../components/skill-components/search'
 
 import { API_CALL_REQUEST, API_CALL_LEVEL_SUBJECT_REQUEST } from '../../store/actions/types'
 import { ALL_SKILL, LEVEL_SUBJECT_SKILL, SKILL_SEARCH } from '../../store/actions/types'
+
+import {uniKeysLevel, uniKeysSubject} from '../../constants'
 import '../../css/common.css';
 
 class SkillList extends React.Component {
@@ -58,37 +61,24 @@ class SkillList extends React.Component {
   }
 
     render() {
-      console.log('>>>>', this.props)
       const { fetching, skills, onRequestAllSkills, onRequestLevelSubjectSkills, fetchSearch, error } = this.props;
-
-      this.uniKeysLevel = [1,2,3,4,5,6,7,8,9,10,11,12]
-      this.optionsLevel = this.uniKeysLevel.map((level) => ({ value: level, label: level, type: 'level' }));
-
-      this.uniKeysSubject = ['ALGEBRA I','ALGEBRA II', 'AMERICAN GOVERNMENT',
-      'CIENCIAS', 'ECONOMICS', 'ELA', 'ENGLISH I', 'ENGLISH II', 'GEOMETRY',
-      'MATEMATICAS', 'MATHEMATICS','PRECALCULUS', 'READING', 'SCIENCE',
-      'SOCIAL STUDIES', 'U.S. HISTORY', 'WORLD GEOGRAPHY', 'WORLD HISTORY', 'WRITING'
-    ]
-      this.optionsSubject = this.uniKeysSubject.map((subject) => ({ value: subject, label: subject, type: 'subject' }));
+      this.optionsLevel = uniKeysLevel.map((level) => ({ value: level, label: level, type: 'level' }));
+      this.optionsSubject = uniKeysSubject.map((subject) => ({ value: subject, label: subject, type: 'subject' }));
 
     return (
       <div>
-
-
           {fetching ? (
             <button disabled>Fetching...</button>
-          ) : (
+          ) :  (
           <div>
             <button onClick={this.props.onRequestAllSkills}>View All</button>
             <Search searchHandle={this.searchKeyPress} />
           </div>
           )}
-
-
         <div>
         <Level level={this.optionsLevel} subject={this.optionsSubject}  handle={this.handleSelect} />
         {
-          (skills != null && !!skills.length) && skills.map((skill) => {
+          !!skills && skills.skills.map((skill) => {
             return (<Card key={skill.qeSerialNumber} {...skill} />)
           })
         }
@@ -96,7 +86,6 @@ class SkillList extends React.Component {
       </div>
       );
   }
-
 }
 
   const mapStateToProps = state => {
