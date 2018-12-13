@@ -1,26 +1,26 @@
 // DO NOT REMOVE THIS FILE YET
-import React, { Component } from 'react'
-import { BrowserRouter } from 'react-router-dom'
-import Logo from './logo';
-import SkillList from './containers/skill-containers/skilllist'
-import { Route, Switch } from 'react-router-dom'
-import Question from './containers/quiz-containers/question'
-import FacebookLoginButton from './fb-login'
-class App extends Component {
-  state = {
-    username: null
-  };
+// import React, { Component } from 'react'
+// import { BrowserRouter } from 'react-router-dom'
+// import Logo from './logo';
+// import SkillList from './containers/skill-containers/skilllist'
+// import { Route, Switch } from 'react-router-dom'
+// import Question from './containers/quiz-containers/question'
+// import FacebookLoginButton from './fb-login'
+// class App extends Component {
+//   state = {
+//     username: null
+//   };
 
-  onFacebookLogin = (loginStatus, resultObject) => {
-    if (loginStatus === true) {
-      console.log(resultObject.user + '  ' + loginStatus)
-      this.setState({
-        username: resultObject.user.name
-      });
-    } else {
-      alert('Facebook login error');
-    }
-  }
+//   onFacebookLogin = (loginStatus, resultObject) => {
+//     if (loginStatus === true) {
+//       console.log(resultObject.user + '  ' + loginStatus)
+//       this.setState({
+//         username: resultObject.user.name
+//       });
+//     } else {
+//       alert('Facebook login error');
+//     }
+//   }
 
   render() {
     const { username } = this.state
@@ -59,22 +59,22 @@ class App extends Component {
     //   </div>
     // )
 
-    return (
-    <React.Fragment>
-    <BrowserRouter>
-      <Switch>
-      <Route path='/:id' component={Question} />
-        <div className="col-md-10">
-          <Logo />
-          <SkillList />
-        </div>
-      </Switch>
-      </BrowserRouter>
-    </React.Fragment>
-    );
-  }
-}
+//     return (
+//     <React.Fragment>
+//     <BrowserRouter>
+//       <Switch>
+//       <Route path='/:id' component={Question} />
+//         <div className="col-md-10">
+//           <Logo />
+//           <SkillList />
+//         </div>
+//       </Switch>
+//       </BrowserRouter>
+//     </React.Fragment>
+//     );
+//   }
+// }
 
-export default App;
+// export default App;
 
 // HOST='0.0.0.0' PORT=8080 npm run start1

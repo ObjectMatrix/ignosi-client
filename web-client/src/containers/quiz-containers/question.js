@@ -27,7 +27,7 @@ class Question extends React.Component {
   componentDidMount = () => {
     const {id} = this.props.match.params
     // console.log('lessonName  >', id, 'ThisState: ', this.state )
-    //this.props.fetchQuiz(id)
+    this.props.fetchQuiz(id)
     // console.log(this.state)
 
   }
