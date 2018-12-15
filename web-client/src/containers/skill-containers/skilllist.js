@@ -18,17 +18,23 @@ class SkillList extends React.Component {
     this.searchKeyPress = this.searchKeyPress.bind(this)
   }
 
+
+  componentDidMount() {
+
+    this.props.onRequestAllSkills()
+  }
+
   /**
    * empty skillset, do not update
    * @param {*} nextProps
    * @param {*} nextState
    */
   shouldComponentUpdate(nextProps, nextState)  {
-    // if (nextProps.skills.skills.length <= 0 ) {
-    //   return false
-    // } else {
-    //   return true
-    // }
+    if (!nextProps.skills.skills) {
+      return false
+    } else {
+      return true
+    }
     return true
   }
   searchKeyPress(e) {
@@ -61,27 +67,31 @@ class SkillList extends React.Component {
   }
 
     render() {
-      const { fetching, skills, onRequestAllSkills, onRequestLevelSubjectSkills, fetchSearch, error } = this.props;
-      this.optionsLevel = uniKeysLevel.map((level) => ({ value: level, label: level, type: 'level' }));
-      this.optionsSubject = uniKeysSubject.map((subject) => ({ value: subject, label: subject, type: 'subject' }));
+    const { skills, onRequestAllSkills, onRequestLevelSubjectSkills, fetchSearch, error } = this.props;
+    this.optionsLevel = uniKeysLevel.map((level) => ({ value: level, label: level, type: 'level' }));
+    this.optionsSubject = uniKeysSubject.map((subject) => ({ value: subject, label: subject, type: 'subject' }));
 
     return (
       <div>
-          {fetching ? (
+      <p>
+        { !!this.props.skills && this.props.skills.level }
+        { !!this.props.skills && this.props.skills.subject}
+      </p>
+          {!!skills && skills.fetching ? (
             <button disabled>Fetching...</button>
           ) :  (
           <div>
-            <button onClick={this.props.onRequestAllSkills}>View All</button>
             <Search searchHandle={this.searchKeyPress} />
+            <Level level={this.optionsLevel} subject={this.optionsSubject}  handle={this.handleSelect} />
+
+            {
+              !!skills && skills.skills.map((skill) => {
+                return (<Card key={skill.qeSerialNumber} {...skill} />)
+              })
+            }
           </div>
-          )}
+        )}
         <div>
-        <Level level={this.optionsLevel} subject={this.optionsSubject}  handle={this.handleSelect} />
-        {
-          !!skills && skills.skills.map((skill) => {
-            return (<Card key={skill.qeSerialNumber} {...skill} />)
-          })
-        }
       </div>
       </div>
       );
@@ -100,10 +110,10 @@ class SkillList extends React.Component {
 
   const mapDispatchToProps = dispatch => {
     return {
-      onRequestAllSkills: () => dispatch({ type: 'ALL_SKILLS',
-      level: null,
-      subject: null
-    }),
+      onRequestAllSkills: () => dispatch({ type: 'ALL_SKILLS' }),
+      // level: null,
+      // subject: null
+
 
       onRequestLevelSubjectSkills: (level, subject) => dispatch({
         type: 'LEVEL_SUBJECT_SKILL',

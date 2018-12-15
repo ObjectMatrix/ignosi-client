@@ -1,0 +1,52 @@
+{
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": [
+            "Chrome >= 37",
+            "Explorer >= 11",
+            "iOS >= 9",
+            "ChromeAndroid >= 30",
+            "Firefox >= 38",
+            "Edge >= 13",
+            "Safari >= 9",
+            "Samsung >= 4"
+          ]
+        }
+      }
+    ],
+    "stage-3"
+  ],
+  "plugins": [
+    ["babel-plugin-transform-builtin-extend", {
+            "globals": ["Error", "Array"],
+            "approximate": true
+    }],
+    "jsx-control-statements",
+    "transform-class-properties",
+    "syntax-dynamic-import",
+    ["transform-runtime", {
+      "polyfill": false,
+      "regenerator": true
+    }]
+  ],
+
+  "env": {
+    "test": {
+      "plugins": [
+        ["babel-plugin-transform-builtin-extend", {
+            "globals": ["Error", "Array"],
+            "approximate": true
+        }],
+        "jsx-control-statements",
+        "transform-class-properties",
+        "transform-es2015-modules-commonjs",
+        "syntax-dynamic-import",
+        "dynamic-import-node"
+      ]
+    }
+  }
+}

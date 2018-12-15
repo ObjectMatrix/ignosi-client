@@ -16,7 +16,6 @@ import AnswerKeys from '../../components/quiz-components/print-keys'
 class Question extends React.Component {
   constructor (props) {
     super (props)
-    this.state = props
     this.getPassage = this.getPassage.bind(this)
     this.getQuestion = this.getQuestion.bind(this)
     this.getAnswers = this.getAnswers.bind(this)
@@ -25,10 +24,12 @@ class Question extends React.Component {
     this.answerkeys = new Set()
   }
   componentDidMount = () => {
+    console.log(this.props)
     const {id} = this.props.match.params
+    console.log('id:  ', id )
     // console.log('lessonName  >', id, 'ThisState: ', this.state )
-    this.props.fetchQuiz(id)
-    // console.log(this.state)
+    // !!id && this.props.fetchQuiz(id)
+
 
   }
 

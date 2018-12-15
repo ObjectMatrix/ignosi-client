@@ -10,22 +10,19 @@ function* watchAll() {
   yield takeLatest(LEVEL_SUBJECT_SKILL, workerAllSkillSagaLevelSubject)
   yield takeLatest(SKILL_SEARCH, workerSearch)
   yield takeLatest(ITEMS_BY_LESSON, workerItems)
-  /**
-   * log actions
-   */
-  // while (true) {
-  //   const action = yield take ('*')
-  //   const state = yield select()
-  //   // console.log('ACTION: ', action, 'SAGA-STATE: ', state)
-  // }
 }
 
 function* workerAllSkillSagaLevelSubject(action) {
+  if(!action.subject || !action.level)
+    return;
   try {
     const response = yield call(fetchSkillsLevelSubject, action)
     const skills = response.data;
-    // dispatch a success action to the store with the new dog
-    yield put({ type: SUCCESS, skills });
+    // dispatch a success action to the store
+    yield put({ type: SUCCESS, skills,
+      subject:action.subject,
+      level: action.level,
+    });
 
   } catch (error) {
     // dispatch a failure action to the store with the error
@@ -65,6 +62,8 @@ function fetchSkills (action) {
 //--------------------------------------------------------------
 
 function* workerSearch(action) {
+  if(!action.searchTerm)
+    return
   try {
     const response = yield call(fetchSearchedSkills, action)
     const skills = response.data;
@@ -85,6 +84,8 @@ function fetchSearchedSkills (action) {
 }
 //----------------------------------------------------------------
 function* workerItems(action) {
+  if(!action.lessonName)
+    return
   try {
     const response = yield call(fetchItems, action)
     const skills = response.data;

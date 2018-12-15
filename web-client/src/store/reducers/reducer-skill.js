@@ -4,21 +4,24 @@ import { ALL_SKILLS, LEVEL_SUBJECT_SKILL, SKILL_SEARCH,
 
 // reducer with initial state
 const initialState = {
-  fetching: false,
+  fetching: true,
   skills: null,
+  level: null,
+  subject: null,
   error: null
 };
 
 export default  (state = initialState, action) => {
   switch (action.type) {
-    //case ALL_SKILLS:
-      //return { ...state, fetching: true, error: null };
+    case ALL_SKILLS:
+      return { ...state, fetching: true, error: null };
     case SUCCESS:
-      return { ...state, fetching: false, skills: action.skills, error: null };
+      return { ...state, fetching: false, skills: action.skills,
+        level: action.level, subject: action.subject, error: null };
     case FAILURE:
       return { ...state, fetching: false, error: action.error };
-    //case LEVEL_SUBJECT_SKILL:
-      //return { ...state, fetching: false, error: null, error: null };
+    case LEVEL_SUBJECT_SKILL:
+      return { ...state, fetching: true, error: null };
     default:
       return state;
   }
